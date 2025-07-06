@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Marks System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 500px;
+        background-color: white;
+        margin: 30px auto;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h3 {
+        text-align: center;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        color: #333;
+        }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #loginError {
+        color: red;
+        text-align: center;
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 25px;
+    }
+
+    th, td {
+        border: 1px solid #999;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    @media screen and (max-width: 600px) {
+        .container {
+        width: 90%;
+        margin: 20px auto;
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="loginSection">
+    <h2>Login</h2>
+    <label>Username:</label>
+    <input type="text" id="username">
+
+    <label>Password:</label>
+    <input type="password" id="password">
+
+    <button onclick="login()">Login</button>
+    <p id="loginError"></p>
+    </div>
+
+
+    <div class="container" id="studentSection" style="display: none;">
+    <h2>Student Marks Entry</h2>
+
+    <label>Student Name:</label>
+    <input type="text" id="name">
+
+    <label>Roll Number:</label>
+    <input type="text" id="roll">
+
+    <label>Tamil Marks:</label>
+    <input type="number" id="tamil">
+
+    <label>English Marks:</label>
+    <input type="number" id="english">
+
+    <label>Maths Marks:</label>
+    <input type="number" id="maths">
+
+    <button onclick="addStudent()">Add Student</button>
+
+    <h3>Student Records</h3>
+    <table id="studentTable">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Roll</th>
+            <th>Tamil</th>
+            <th>English</th>
+            <th>Maths</th>
+            <th>Total</th>
+            <th>Average</th>
+            <th>Result</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    </div>
+
+    <script>
+    function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (username === "lucky" && password === "1230") {
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("studentSection").style.display = "block";
+        } else {
+        document.getElementById("loginError").innerText = "Invalid username or password.";
+        }
+    }
+
+    function addStudent() {
+        const name = document.getElementById("name").value;
+        const roll = document.getElementById("roll").value;
+        const tamil = parseInt(document.getElementById("tamil").value);
+        const english = parseInt(document.getElementById("english").value);
+        const maths = parseInt(document.getElementById("maths").value);
+
+        if (!name || !roll || isNaN(tamil) || isNaN(english) || isNaN(maths)) {
+        alert("Please fill all fields correctly.");
+        return;
+        }
+
+        const total = tamil + english + maths;
+        const average = (total / 3).toFixed(2);
+        const result = (tamil >= 35 && english >= 35 && maths >= 35) ? "Pass" : "Fail";
+
+        const table = document.getElementById("studentTable").getElementsByTagName("tbody")[0];
+        const newRow = table.insertRow();
+
+        newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${roll}</td>
+        <td>${tamil}</td>
+        <td>${english}</td>
+        <td>${maths}</td>
+        <td>${total}</td>
+        <td>${average}</td>
+        <td>${result}</td>
+        `;
+
+        document.getElementById("name").value = "";
+        document.getElementById("roll").value = "";
+        document.getElementById("tamil").value = "";
+        document.getElementById("english").value = "";
+        document.getElementById("maths").value = "";
+        }
+    </script>
+</body>
+</html>
